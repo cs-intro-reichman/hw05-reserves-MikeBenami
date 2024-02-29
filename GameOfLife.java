@@ -60,17 +60,15 @@
 	// This function assumes that the input file contains valid data, and does no input testing.
 	public static int[][] read(String fileName) {
 		In in = new In(fileName);
-		int rows = Integer.parseInt(in.readLine());
-		int cols = Integer.parseInt(in.readLine());
+		int rows = in.readInt();
+		int cols = in.readInt();
 		int[][] board = new int[rows + 2][cols + 2];
-	
-		for (int i = 0; i < rows; i++) {
+		in.readLine();
+		for (int i = 1; i <= rows; i++) {
 			String line = in.readLine();
-			if (line.isEmpty()) {
-				continue;
-			}
-			for (int j = 0; j < cols; j++) {
-				board[i + 1][j + 1] = line.charAt(j) - '0';
+			for (int j = 1; j <= Math.min(line.length(), cols); j++) {
+				char cell = line.charAt(j - 1);
+				board[i][j] = (cell == 'x' || cell == 'X') ? 1 : 0;
 			}
 		}
 		return board;
