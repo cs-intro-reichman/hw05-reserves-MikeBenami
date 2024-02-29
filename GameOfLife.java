@@ -64,8 +64,8 @@ public class GameOfLife {
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
 		
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
+		for (int i = 1; i <= rows; i++) {
+			for (int j = 1; j <= cols; j++) {
 				board[i][j] = in.readInt();
 			}
 		}
@@ -111,24 +111,26 @@ public class GameOfLife {
 	// Assumes that i is at least 1 and at most the number of rows in the board - 1. 
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
-		int count = 0;
-		for (int di = 0; di <= 2; di++) {
-			for (int dj = 0; dj <= 2; dj++) {
-				if (di == 0 && dj == 0) continue;
-				if (board[i + di][j + dj] == 1) {
-					count++;
-				}	
+		int liveCount = 0;
+		for (int di = -1; di <= 1; di++) {
+			for (int dj = -1; dj <= 1; dj++) {
+				if (di == 0 && dj == 0) continue; 
+				int ni = i + di, nj = j + dj;
+				if (ni >= 0 && ni < board.length && nj >= 0 && nj < board[i].length) {
+					liveCount += board[ni][nj];
 				}
 			}
-			return count;
+		}
+		return liveCount;
 	}
+	
 
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-		for (int i = 0; i < board.length - 2; i++) {
-			for (int j = 0; j < board[i].length - 2; j++) {
-				System.out.print(board[i][j] + " ");
+		for (int i = 0; i < arr.length - 2; i++) {
+			for (int j = 0; j < arr[i].length - 2; j++) {
+				System.out.print(arr[i][j] + " ");
 			}
 			System.out.println();
 		}
