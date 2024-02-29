@@ -66,13 +66,15 @@
 	
 		for (int i = 0; i < rows; i++) {
 			String line = in.readLine();
+			if (line.isEmpty()) {
+				continue;
+			}
 			for (int j = 0; j < cols; j++) {
 				board[i + 1][j + 1] = line.charAt(j) - '0';
 			}
 		}
 		return board;
 	}
-	
 	// Creates a new board from the given board, using the rules of the game.
 	// Uses the cellValue(board,i,j) function to compute the value of each 
 	// cell in the new board. Returns the new board.
