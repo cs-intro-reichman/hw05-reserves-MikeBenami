@@ -5,7 +5,7 @@
  *  The file format is described in the homework document.
  */
 
-public class GameOfLife {
+ public class GameOfLife {
 
 	public static void main(String[] args) {
 		String fileName = args[0];
@@ -59,16 +59,15 @@ public class GameOfLife {
 	// of this frame as representing the infinite number of dead cells that exist in every direction.
 	// This function assumes that the input file contains valid data, and does no input testing.
 	public static int[][] read(String fileName) {
-		In in = new In(fileName); 
+		In in = new In(fileName);
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
-		
-		for (int i = 1; i <= rows; i++) {
+	
+		for (int i = 0; i < rows; i++) {
 			String line = in.readLine();
-			for (int j = 1; j <= cols; j++) {
-				char cell = line.charAt(j - 1);
-				board[i][j] = (cell == 'x' || cell == 'X') ? 1 : 0;
+			for (int j = 0; j < cols; j++) {
+				board[i + 1][j + 1] = line.charAt(j) - '0';
 			}
 		}
 		return board;
@@ -78,12 +77,9 @@ public class GameOfLife {
 	// Uses the cellValue(board,i,j) function to compute the value of each 
 	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
-		int rows = board.length;
-		int cols = board[0].length;
-		int[][] newBoard = new int[rows][cols];
-
-		for (int i = 1; i < rows - 1; i++){
-			for (int j = 1; j < cols - 1; j++){
+		int[][] newBoard = new int[board.length][board[0].length];
+		for (int i = 1; i < board.length - 1; i++) {
+			for (int j = 1; j < board[i].length - 1; j++) {
 				newBoard[i][j] = cellValue(board, i, j);
 			}
 		}
@@ -100,11 +96,13 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
-		int liveNeighbors = count(board, i, j);
-		if (board[i][j] == 1) {
-			return (liveNeighbors == 2 || liveNeighbors == 3) ? 1 : 0;
+		int aliveNeighbors = count(board, i, j);
+		if (board[i][j] == 1 && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
+			return 0;
+		} else if (board[i][j] == 0 && aliveNeighbors == 3) {
+			return 1;
 		} else {
-			return (liveNeighbors == 3) ? 1 : 0;
+			return board[i][j];
 		}
 	}
 	
@@ -113,25 +111,23 @@ public class GameOfLife {
 	// Assumes that i is at least 1 and at most the number of rows in the board - 1. 
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
-		int liveCount = 0;
-		for (int di = -1; di <= 1; di++) {
-			for (int dj = -1; dj <= 1; dj++) {
-				if (di == 0 && dj == 0) continue; 
-				int ni = i + di, nj = j + dj;
-				if (ni >= 0 && ni < board.length && nj >= 0 && nj < board[i].length) {
-					liveCount += board[ni][nj];
+		int count = 0;
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				if (x == 0 && y == 0)
+					continue;
+				if (board[i + x][j + y] == 1) {
+					count++;
 				}
 			}
 		}
-		return liveCount;
+		return count;
 	}
-	
-
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-		for (int i = 0; i < arr.length - 2; i++) {
-			for (int j = 0; j < arr[i].length - 2; j++) {
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
 				System.out.print(arr[i][j] + " ");
 			}
 			System.out.println();
