@@ -128,8 +128,8 @@
     public static void print(int[][] arr) {
 		for (int i = 1; i < arr.length - 1; i++) {
 			for (int j = 1; j < arr[i].length - 1; j++) {
-				System.out.printf("%2s",arr[i][j]);
-				if (j < arr[i].length - 2) System.out.print(" "); 
+				System.out.printf("%1s",arr[i][j]);
+				if (j < arr[i].length - 2) System.out.print("  "); 
 			}
 			System.out.println();
 		}
