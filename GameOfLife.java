@@ -129,11 +129,9 @@
 		for (int i = 1; i < arr.length - 1; i++) {
 			for (int j = 1; j < arr[i].length - 1; j++) {
 				System.out.print(arr[i][j]);
-				if (j < arr[i].length - 2) {
-					System.out.print(" "); // Add space between numbers, but not after the last number in a row
-				}
+				if (j < arr[i].length - 2) System.out.print(" "); 
 			}
-			System.out.println(); // Ensure to move to a new line after printing each row
+			System.out.println();
 		}
 	}
     // Displays the board. Living and dead cells are represented by black and white squares, respectively.
