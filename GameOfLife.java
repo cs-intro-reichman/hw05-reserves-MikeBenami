@@ -131,7 +131,7 @@
 				System.out.printf(" %3s",arr[i][j]);
 				if (j < arr[i].length - 2) System.out.print(" "); 
 			}
-			System.out.println(" ");
+			System.out.println();
 		}
 	}
     // Displays the board. Living and dead cells are represented by black and white squares, respectively.
